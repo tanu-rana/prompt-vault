@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "PromptVault - Elite Prompt Library Manager",
+  "name": "PromptVault - No Icons Test",
   "version": "1.0.0",
-  "description": "Premium prompt library manager with slash commands, tagging, and seamless LLM integration",
+  "description": "Test version without icons to isolate the issue",
   
   "permissions": [
     "storage",
@@ -44,23 +44,10 @@
   
   "action": {
     "default_popup": "popup.html",
-    "default_title": "PromptVault",
-    "default_icon": {
-      "16": "icon16.png",
-      "32": "icon32.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
-    }
+    "default_title": "PromptVault"
   },
   
   "options_page": "options.html",
-  
-  "icons": {
-    "16": "icon16.png",
-    "32": "icon32.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  },
   
   "commands": {
     "open-popup": {
@@ -74,7 +61,7 @@
   
   "web_accessible_resources": [
     {
-      "resources": ["styles/*", "*.png"],
+      "resources": ["styles/*"],
       "matches": ["<all_urls>"]
     }
   ]
