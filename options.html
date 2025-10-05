@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptVault Settings</title>
+  <link rel="stylesheet" href="styles/options.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Sora:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="options-container">
+    <!-- Header -->
+    <header class="options-header">
+      <div class="header-content">
+        <div class="header-left">
+          <h1 class="app-title">PromptVault</h1>
+          <p class="app-subtitle">Manage your prompt library</p>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="options-nav">
+      <div class="nav-content">
+        <button class="nav-tab active" data-tab="library">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14,2 14,8 20,8"/>
+          </svg>
+          Library
+        </button>
+        <button class="nav-tab" data-tab="settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v6M12 17v6M5.64 7.05l4.95 4.95M13.41 13.41l4.95 4.95M7.05 18.36l4.95-4.95M13.41 10.59l4.95-4.95"/>
+          </svg>
+          Settings
+        </button>
+        <button class="nav-tab" data-tab="import-export">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7,10 12,15 17,10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Import/Export
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="options-main">
+      <!-- Library Tab -->
+      <div class="tab-content active" id="library-tab">
+        <div class="tab-header">
+          <div class="tab-title">
+            <h2>Prompt Library</h2>
+            <p>Manage your prompts with advanced search, filtering, and organization</p>
+          </div>
+          <div class="tab-actions">
+            <button class="btn btn-primary" id="addPromptBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Add Prompt
+            </button>
+          </div>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="search-filters-section">
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+              </svg>
+              <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Search prompts by title, content, or tags..."
+                autocomplete="off"
+              >
+              <button class="clear-search" id="clearSearch" title="Clear search">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="filters-container">
+            <div class="filter-group">
+              <label for="sortBy">Sort by:</label>
+              <select id="sortBy" class="filter-select">
+                <option value="relevance">Relevance</option>
+                <option value="recent">Recently Updated</option>
+                <option value="usage">Most Used</option>
+                <option value="alphabetical">Alphabetical</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="tagFilter">Filter by tag:</label>
+              <select id="tagFilter" class="filter-select">
+                <option value="">All tags</option>
+              </select>
+            </div>
+
+            <div class="filter-stats" id="filterStats">
+              <span class="stats-text">0 prompts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prompts Grid -->
+        <div class="prompts-grid" id="promptsGrid">
+          <!-- Prompts will be dynamically inserted here -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <div class="empty-icon">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10,9 9,9 8,9"/>
+            </svg>
+          </div>
+          <h3>No prompts found</h3>
+          <p>Create your first prompt or adjust your search filters</p>
+          <button class="btn btn-primary" id="emptyAddBtn">Add Your First Prompt</button>
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div class="tab-content" id="settings-tab">
+        <div class="tab-header">
+          <div class="tab-title">
+            <h2>Settings</h2>
+            <p>Customize your PromptVault experience</p>
+          </div>
+        </div>
+
+        <div class="settings-sections">
+          <!-- Appearance Settings -->
+          <div class="settings-section">
+            <h3>Appearance</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <label for="themeSelect">Theme</label>
+                <p>Choose your preferred color scheme</p>
+              </div>
+              <select id="themeSelect" class="setting-select">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Behavior Settings -->
+          <div class="settings-section">
+            <h3>Behavior</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <label for="showPreviewTooltips">Preview Tooltips</label>
+                <p>Show prompt previews when hovering over items</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="showPreviewTooltips">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <label for="maxSuggestions">Max Suggestions</label>
+                <p>Maximum number of suggestions in slash command dropdown</p>
+              </div>
+              <input type="number" id="maxSuggestions" class="setting-input" min="3" max="20" value="8">
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <label for="enableKeyboardShortcuts">Keyboard Shortcuts</label>
+                <p>Enable keyboard shortcuts for quick access</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="enableKeyboardShortcuts">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Data Settings -->
+          <div class="settings-section">
+            <h3>Data Management</h3>
+            <div class="setting-item">
+              <div class="setting-info">
+                <label>Clear All Data</label>
+                <p>Remove all prompts and settings (cannot be undone)</p>
+              </div>
+              <button class="btn btn-danger" id="clearAllBtn">Clear All Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Import/Export Tab -->
+      <div class="tab-content" id="import-export-tab">
+        <div class="tab-header">
+          <div class="tab-title">
+            <h2>Import & Export</h2>
+            <p>Backup and restore your prompt library</p>
+          </div>
+        </div>
+
+        <div class="import-export-sections">
+          <!-- Export Section -->
+          <div class="ie-section">
+            <div class="ie-header">
+              <h3>Export Library</h3>
+              <p>Download your entire prompt library as a JSON file</p>
+            </div>
+            <div class="ie-actions">
+              <button class="btn btn-primary" id="exportAllBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7,10 12,15 17,10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Export All Prompts
+              </button>
+              <button class="btn btn-secondary" id="exportSelectedBtn" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7,10 12,15 17,10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Export Selected
+              </button>
+            </div>
+          </div>
+
+          <!-- Import Section -->
+          <div class="ie-section">
+            <div class="ie-header">
+              <h3>Import Library</h3>
+              <p>Import prompts from a JSON file</p>
+            </div>
+            <div class="ie-actions">
+              <div class="import-options">
+                <label class="import-option">
+                  <input type="radio" name="importMode" value="merge" checked>
+                  <span>Merge with existing prompts</span>
+                </label>
+                <label class="import-option">
+                  <input type="radio" name="importMode" value="replace">
+                  <span>Replace all existing prompts</span>
+                </label>
+              </div>
+              <button class="btn btn-primary" id="importBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17,8 12,3 7,8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                Import Prompts
+              </button>
+            </div>
+          </div>
+
+          <!-- Sample Data Section -->
+          <div class="ie-section">
+            <div class="ie-header">
+              <h3>Sample Data</h3>
+              <p>Load sample prompts to get started</p>
+            </div>
+            <div class="ie-actions">
+              <button class="btn btn-secondary" id="loadSampleBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                </svg>
+                Load Sample Prompts
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add/Edit Prompt Modal -->
+  <div class="modal-overlay" id="promptModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add New Prompt</h2>
+        <button class="modal-close" id="modalClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      
+      <form class="modal-form" id="promptForm">
+        <div class="form-group">
+          <label for="promptTitle">Title *</label>
+          <input type="text" id="promptTitle" class="form-input" placeholder="Enter prompt title..." required>
+        </div>
+        
+        <div class="form-group">
+          <label for="promptContent">Content *</label>
+          <textarea id="promptContent" class="form-textarea" placeholder="Enter your prompt content..." required rows="8"></textarea>
+          <div class="form-hint">Use [PLACEHOLDER] for dynamic content areas</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="promptTags">Tags</label>
+          <div class="tags-input-container">
+            <input type="text" id="promptTags" class="form-input" placeholder="Add tags (press Enter to add)">
+            <div class="tags-list" id="tagsList"></div>
+          </div>
+          <div class="form-hint">Tags help organize and find your prompts quickly</div>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveBtn">Save Prompt</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="confirmModal" style="display: none;">
+    <div class="modal-content modal-small">
+      <div class="modal-header">
+        <h2 id="confirmTitle">Confirm Action</h2>
+      </div>
+      <div class="modal-body">
+        <p id="confirmMessage">Are you sure you want to proceed?</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
+        <button class="btn btn-danger" id="confirmOk">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden file input for import -->
+  <input type="file" id="fileInput" accept=".json" style="display: none;">
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="utils/storage.js"></script>
+  <script src="utils/search.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
